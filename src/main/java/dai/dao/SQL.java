@@ -111,4 +111,20 @@ public class SQL {
         }
         return sql;
     }
+
+    public String deleteSQL(String choice) {
+        String sql = "Delete from ";
+        switch (choice) {
+            case "4.1":
+                sql = sql + "student where id = ?";
+                break;
+            case "4.2":
+                sql = sql + "subject where id = ?";
+                break;
+            case "4.3":
+                sql = sql + "teacher where id = ?";
+                break;
+        }
+        return sql;
+    }
 }
