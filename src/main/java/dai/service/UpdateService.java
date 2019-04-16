@@ -42,11 +42,10 @@ class UpdateService {
     private void updateStudent(String info, String sql) {
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
         Student student = Tools.getStudentModel(info);
         try {
             if (!student.isEmpty()) {
-                preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(4, student.getId());
                 preparedStatement.setString(1, student.getName());
                 preparedStatement.setInt(2, student.getAge());
@@ -62,24 +61,17 @@ class UpdateService {
             System.out.println("修改学生信息失败！\n" + e.toString());
             new UpdateService("3.1");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 
     private void updateSubject(String info, String sql) {
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
         Subject subject = Tools.getSubjectModel(info);
         try {
             if (!subject.isEmpty()) {
-                preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(3, subject.getId());
                 preparedStatement.setString(1, subject.getName());
                 preparedStatement.setString(2, subject.getDescribe());
@@ -94,24 +86,17 @@ class UpdateService {
             System.out.println("修改课程信息失败！\n" + e.toString());
             new UpdateService("3.2");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 
     private void updateTeacher(String info, String sql) {
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
         Teacher teacher = Tools.getTeacherModel(info);
         try {
             if (!teacher.isEmpty()) {
-                preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(3, teacher.getId());
                 preparedStatement.setString(1, teacher.getName());
                 preparedStatement.setInt(2, teacher.getSubject_id());
@@ -126,27 +111,20 @@ class UpdateService {
             System.out.println("修改老师信息失败！\n" + e.toString());
             new UpdateService("3.3");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 
     private void updateStudentScore(String info, String sql) {
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
         Map<Student, Subject> studentSubjectMap = Tools.getStudentScoreModel(info);
         Student student = Tools.getScoreStudent(studentSubjectMap);
         Subject subject = studentSubjectMap.get(student);
         Score score = student.getScore();
         try {
             if (!subject.isEmpty() && !subject.isEmpty() && !score.isEmpty()) {
-                preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, subject.getId());
                 preparedStatement.setInt(3, student.getId());
                 preparedStatement.setFloat(2, score.getScore());
@@ -161,13 +139,7 @@ class UpdateService {
             System.out.println("修改学生成绩信息失败！\n" + e.toString());
             new UpdateService("3.4");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 
