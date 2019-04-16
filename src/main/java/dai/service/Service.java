@@ -29,7 +29,7 @@ public class Service {
                 String password = resultSet.getString("password");
                 if (input[0].equals(user) && input[1].equals(password)) {
                     Tools.printMenu();
-                    updateService(Tools.getScanner());
+                    deleteService(Tools.getScanner());
                 } else {
                     System.out.println("不能进入系统————\n" +
                             "\t账号或密码错误！");
@@ -360,19 +360,25 @@ public class Service {
         PreparedStatement preparedStatement = null;
         Student student = Tools.getStudentModel(info);
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, student.getId());
-            preparedStatement.execute();
-            System.out.println("删除学生信息[" + student.getStudentInfo() + "]成功！");
+            if (!student.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, student.getId());
+                preparedStatement.execute();
+                System.out.println("删除学生信息[学号：" + student.getId() + "]成功！");
+            } else {
+                System.out.println("不匹配任何学生信息！");
+                new Service().deleteService("4.1");
+            }
         } catch (SQLException e) {
             System.out.println("删除学生信息失败！\n" + e.toString());
-            new Service().updateService("4.1");
+            new Service().deleteService("4.1");
         } finally {
             try {
                 connection.close();
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
@@ -383,19 +389,25 @@ public class Service {
         PreparedStatement preparedStatement = null;
         Subject subject = Tools.getSubjectModel(info);
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, subject.getId());
-            preparedStatement.execute();
-            System.out.println("删除课程信息[" + subject.getName() + "]成功！");
+            if (!subject.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, subject.getId());
+                preparedStatement.execute();
+                System.out.println("删除课程信息[" + subject.getId() + "]成功！");
+            } else {
+                System.out.println("不匹配任何课程信息！");
+                new Service().deleteService("4.2");
+            }
         } catch (SQLException e) {
             System.out.println("删除课程信息失败！\n" + e.toString());
-            new Service().updateService("4.2");
+            new Service().deleteService("4.2");
         } finally {
             try {
                 connection.close();
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
@@ -406,20 +418,25 @@ public class Service {
         PreparedStatement preparedStatement = null;
         Teacher teacher = Tools.getTeacherModel(info);
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, teacher.getId());
-            preparedStatement.execute();
-            System.out.println("删除老师信息[" + teacher.getName() + "]成功！");
-
+            if (!teacher.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, teacher.getId());
+                preparedStatement.execute();
+                System.out.println("删除老师信息[" + teacher.getId() + "]成功！");
+            } else {
+                System.out.println("不匹配任何老师信息！");
+                new Service().deleteService("4.3");
+            }
         } catch (SQLException e) {
             System.out.println("删除老师信息失败！\n" + e.toString());
-            new Service().updateService("4.3");
+            new Service().deleteService("4.3");
         } finally {
             try {
                 connection.close();
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
