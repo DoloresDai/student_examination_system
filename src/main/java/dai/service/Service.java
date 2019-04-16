@@ -22,7 +22,6 @@ public class Service {
         String systemIn = Tools.getScanner();
         ResultSet resultSet = connect.executeSQL(statement, new Login().getLoginSql());
         String[] input = systemIn.split(":");
-
         try {
             while (resultSet.next()) {
                 String user = resultSet.getString("user");
@@ -32,9 +31,15 @@ public class Service {
                     deleteService(Tools.getScanner());
                 } else {
                     System.out.println("不能进入系统————\n" +
-                            "\t账号或密码错误！");
+                            "\t账号或密码错误！\n" +
+                            "\t请重新输入：");
+                    getLogin();
                 }
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("账号密码信息输入不全————\n" +
+                    "\t请重新输入:");
+            getLogin();
         } catch (SQLException e) {
             System.out.println("进入系统失败！");
         } finally {
