@@ -79,32 +79,36 @@ public class SQL {
         String sql = "insert into ";
         switch (choice) {
             case "2.1":
-                sql = sql +" student(id,name,age,sex) values(?,?,?,?)";
+                sql = sql + " student(id,name,age,sex) values(?,?,?,?)";
                 break;
             case "2.2":
-                sql = sql + " subject values(id,name,describe) values(?,?,?)";
+                sql = sql + " subject(id,name,content) values(?,?,?)";
                 break;
             case "2.3":
-                sql = sql + " teacher values(id,name) values(?,?,?)";
+                sql = sql + " teacher(id,name,subject_id) values(?,?,?)";
+                break;
+            case "2.4":
+                sql = sql + " score(subject_id,student_id,score) values(?,?,?)";
                 break;
         }
         return sql;
     }
-    public String updateSQL(String choice){
+
+    public String updateSQL(String choice) {
         String sql = "Update ";
-        switch (choice){
+        switch (choice) {
             case "3.1":
-                sql=sql+"student set name = ? ,age =? ,sex =? where id = ?";
+                sql = sql + "student set name = ? ,age =? ,sex =? where id = ?";
                 break;
             case "3.2":
-                sql=sql +"subject set name = ?,describe = ? where id = ?";
+                sql = sql + "subject set name = ?,content = ? where id = ?";
                 break;
             case "3.3":
-                sql=sql+"teacher set name = ? where id = ?";
+                sql = sql + "teacher set name = ? ,subject_id = ? where id = ?";
                 break;
             case "3.4":
-                sql = "score set subject_id = ?,score=? where id = ?";
-        }return sql;
+                sql = sql + "score set subject_id = ?,score=? where student_id = ?";
+        }
+        return sql;
     }
-
 }
