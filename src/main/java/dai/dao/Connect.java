@@ -31,6 +31,15 @@ public class Connect {
         }
         return statement;
     }
+    public PreparedStatement getPreparedStatement(Connection conn,String sql){
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = conn.prepareStatement(sql);
+        } catch (SQLException e) {
+            System.out.println("创建PrepareStatement失败！");
+        }
+        return preparedStatement;
+    }
     public ResultSet executeSQL(Statement statement,String sql){
         ResultSet rs = null;
         try {
