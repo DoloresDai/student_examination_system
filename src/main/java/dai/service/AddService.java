@@ -54,7 +54,7 @@ class AddService {
                 preparedStatement.execute();
                 System.out.println("添加学生信息[" + student.getStudentInfo() + "]成功！");
             } else {
-                System.out.println("————老师信息输入不全————\n" +
+                System.out.println("————学生信息输入不全————\n" +
                         "\t 请重新输入：");
                 new AddService("2.1");
             }
