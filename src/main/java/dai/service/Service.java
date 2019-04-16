@@ -13,6 +13,10 @@ import java.sql.*;
 import java.util.Map;
 
 public class Service {
+    public Service() {
+        getLogin();
+    }
+
     public void getLogin() {
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
@@ -28,7 +32,7 @@ public class Service {
                 String password = resultSet.getString("password");
                 if (input[0].equals(user) && input[1].equals(password)) {
                     Tools.printMenu();
-                    deleteService(Tools.getScanner());
+                    choicefunction(Tools.getScanner());
                 } else {
                     System.out.println("不能进入系统————\n" +
                             "\t账号或密码错误！\n" +
@@ -41,10 +45,31 @@ public class Service {
                     "\t请重新输入:");
             getLogin();
         } catch (SQLException e) {
-            System.out.println("进入系统失败！");
+            System.out.println("进入SQL系统失败————\n" +
+                    "\t请再次尝试：");
+            getLogin();
         } finally {
             connect.closeConnect(resultSet, statement, connection);
         }
+    }
+
+    public void choicefunction(String choice) {
+        String one = choice.split("\\.")[0];
+        switch (one) {
+            case "1":
+                queryService();
+                break;
+            case "2":
+                addService(choice);
+                break;
+            case "3":
+                updateService(choice);
+                break;
+            case "4":
+                deleteService(choice);
+                break;
+        }
+
     }
 
     public void queryService() {
@@ -124,12 +149,13 @@ public class Service {
                 preparedStatement.execute();
                 System.out.println("添加学生信息[" + student.getStudentInfo() + "]成功！");
             } else {
-                System.out.println("老师信息输入不全！请重新输入：");
-                new Service().addService("2.1");
+                System.out.println("老师信息输入不全————\n" +
+                        "\t 请重新输入：");
+                addService("2.1");
             }
         } catch (SQLException e) {
             System.out.println("增添学生信息失败！\n" + e.toString());
-            new Service().addService("2.1");
+            addService("2.1");
         } finally {
             try {
                 connection.close();
@@ -155,12 +181,13 @@ public class Service {
                 preparedStatement.execute();
                 System.out.println("添加课程信息[" + subject.getName() + "]成功！");
             } else {
-                System.out.println("课程信息输入不全！请重新输入：");
-                new Service().addService("2.2");
+                System.out.println("课程信息输入不全————\n" +
+                        "\t 请重新输入：");
+                addService("2.2");
             }
         } catch (SQLException e) {
             System.out.println("增加课程信息失败！\n" + e.toString());
-            new Service().addService("2.2");
+            addService("2.2");
         } finally {
             try {
                 connection.close();
@@ -186,12 +213,13 @@ public class Service {
                 preparedStatement.execute();
                 System.out.println("添加老师信息[" + teacher.getName() + "]成功！");
             } else {
-                System.out.println("老师信息输入不全！请重新输入：");
-                new Service().addService("2.3");
+                System.out.println("老师信息输入不全————\n" +
+                        "\t 请重新输入：");
+                addService("2.3");
             }
         } catch (SQLException e) {
             System.out.println("增添老师信息失败！\n" + e.toString());
-            new Service().addService("2.3");
+            addService("2.3");
         } finally {
             try {
                 connection.close();
@@ -219,12 +247,13 @@ public class Service {
                 preparedStatement.setFloat(3, score.getScore());
                 System.out.println("添加学生成绩信息[学号：" + student.getId() + score.toString() + "]成功！");
             } else {
-                System.out.println("学生成绩信息输入不全！请重新输入：");
-                new Service().addService("2.4");
+                System.out.println("学生成绩信息输入不全————\n" +
+                        "\t 请重新输入：");
+                addService("2.4");
             }
         } catch (SQLException e) {
             System.out.println("增添学生成绩信息失败！\n" + e.toString());
-            new Service().addService("2.4");
+            addService("2.4");
         } finally {
             try {
                 connection.close();
@@ -273,12 +302,13 @@ public class Service {
                 preparedStatement.execute();
                 System.out.println("修改学生信息[" + student.getStudentInfo() + "]成功！");
             } else {
-                System.out.println("学生信息输入不全！请重新输入：");
-                new Service().updateService("3.1");
+                System.out.println("学生信息输入不全————\n" +
+                        "\t 请重新输入：");
+                updateService("3.1");
             }
         } catch (SQLException e) {
             System.out.println("修改学生信息失败！\n" + e.toString());
-            new Service().updateService("3.1");
+            updateService("3.1");
         } finally {
             try {
                 connection.close();
@@ -304,12 +334,13 @@ public class Service {
                 preparedStatement.execute();
                 System.out.println("修改课程信息[" + subject.getName() + "]成功！");
             } else {
-                System.out.println("课程信息输入不全！请重新输入：");
-                new Service().updateService("3.2");
+                System.out.println("课程信息输入不全————\n" +
+                        "\t 请重新输入：");
+                updateService("3.2");
             }
         } catch (SQLException e) {
             System.out.println("修改课程信息失败！\n" + e.toString());
-            new Service().updateService("3.2");
+            updateService("3.2");
         } finally {
             try {
                 connection.close();
@@ -335,12 +366,13 @@ public class Service {
                 preparedStatement.execute();
                 System.out.println("修改老师信息[" + teacher.getName() + "]成功！");
             } else {
-                System.out.println("老师信息输入不全！请重新输入：");
-                new Service().updateService("3.3");
+                System.out.println("老师信息输入不全————\n" +
+                        "\t 请重新输入：");
+                updateService("3.3");
             }
         } catch (SQLException e) {
             System.out.println("修改老师信息失败！\n" + e.toString());
-            new Service().updateService("3.3");
+            updateService("3.3");
         } finally {
             try {
                 connection.close();
@@ -369,12 +401,13 @@ public class Service {
                 preparedStatement.execute();
                 System.out.println("修改学生成绩信息[学号：" + student.getId() + score.toString() + "]成功！");
             } else {
-                System.out.println("学生成绩信息输入不全！请重新输入：");
-                new Service().updateService("3.4");
+                System.out.println("学生成绩信息输入不全————\n" +
+                        "\t 请重新输入：");
+                updateService("3.4");
             }
         } catch (SQLException e) {
             System.out.println("修改学生成绩信息失败！\n" + e.toString());
-            new Service().updateService("3.4");
+            updateService("3.4");
         } finally {
             try {
                 connection.close();
@@ -416,12 +449,13 @@ public class Service {
                 preparedStatement.execute();
                 System.out.println("删除学生信息[学号：" + student.getId() + "]成功！");
             } else {
-                System.out.println("不匹配任何学生信息！");
-                new Service().deleteService("4.1");
+                System.out.println("不匹配任何学生信息————\n" +
+                        "\t请重新输入：");
+                deleteService("4.1");
             }
         } catch (SQLException e) {
             System.out.println("删除学生信息失败！\n" + e.toString());
-            new Service().deleteService("4.1");
+            deleteService("4.1");
         } finally {
             try {
                 connection.close();
@@ -445,12 +479,13 @@ public class Service {
                 preparedStatement.execute();
                 System.out.println("删除课程信息[" + subject.getId() + "]成功！");
             } else {
-                System.out.println("不匹配任何课程信息！");
-                new Service().deleteService("4.2");
+                System.out.println("不匹配任何课程信息————\n" +
+                        "\t请重新输入：");
+                deleteService("4.2");
             }
         } catch (SQLException e) {
             System.out.println("删除课程信息失败！\n" + e.toString());
-            new Service().deleteService("4.2");
+            deleteService("4.2");
         } finally {
             try {
                 connection.close();
@@ -474,12 +509,13 @@ public class Service {
                 preparedStatement.execute();
                 System.out.println("删除老师信息[" + teacher.getId() + "]成功！");
             } else {
-                System.out.println("不匹配任何老师信息！");
-                new Service().deleteService("4.3");
+                System.out.println("不匹配任何老师信息————\n" +
+                        "\t请重新输入：");
+                deleteService("4.3");
             }
         } catch (SQLException e) {
             System.out.println("删除老师信息失败！\n" + e.toString());
-            new Service().deleteService("4.3");
+            deleteService("4.3");
         } finally {
             try {
                 connection.close();
