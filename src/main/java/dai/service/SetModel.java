@@ -21,6 +21,7 @@ public class SetModel {
             student.setSex(studentInfo.get(3));
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("学生信息输入错误！");
+        }catch (IndexOutOfBoundsException e){
         }
         return student;
     }
@@ -34,6 +35,7 @@ public class SetModel {
             teacher.setSubject_id(Integer.parseInt(studentInfo.get(2)));
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("老师信息输入错误！");
+        }catch (IndexOutOfBoundsException e){
         }
         return teacher;
     }
@@ -47,6 +49,7 @@ public class SetModel {
             subject.setDescribe(studentInfo.get(2));
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("科目信息输入错误！");
+        }catch (IndexOutOfBoundsException e){
         }
         return subject;
     }
