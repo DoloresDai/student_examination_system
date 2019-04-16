@@ -55,8 +55,8 @@ public class MainService {
     }
 
     private void choiceService(String choice) {
-        String one = choice.split("\\.")[0];
-        switch (one) {
+        String firstNumber = choice.split("\\.")[0];
+        switch (firstNumber) {
             case "1":
                 new QueryService(choice);
                 isLogin();
