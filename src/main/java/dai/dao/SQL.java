@@ -1,10 +1,9 @@
 package main.java.dai.dao;
 
-import main.java.dai.model.Student;
 import main.java.dai.tools.Tools;
 
 public class SQL {
-    public String query(String choice) {
+    public String querySQL(String choice) {
         String[] selectChoice = choice.split("\\.");
         switch (selectChoice[0]) {
             case "1":
@@ -12,13 +11,13 @@ public class SQL {
                     case "1":
                         return queryStudentInfo(choice);
                     case "2":
-                        return querySubjectInfo(choice);
+                        return querySubjectInfoSQL(choice);
                     case "3":
-                        return queryTeacherInfo(choice);
+                        return queryTeacherInfoSQL(choice);
                 }
                 break;
             case "2":
-                return addInfo(choice);
+                return addInfoSQL(choice);
         }
         return "";
     }
@@ -46,7 +45,7 @@ public class SQL {
         return sql;
     }
 
-    public String querySubjectInfo(String choice) {
+    public String querySubjectInfoSQL(String choice) {
         String sql = "select * from subject left join teacher on teacher.subject_id = subject.id";
         switch (choice) {
             case "1.2.1":
@@ -63,7 +62,7 @@ public class SQL {
         return sql;
     }
 
-    public String queryTeacherInfo(String choice) {
+    public String queryTeacherInfoSQL(String choice) {
         String sql = "select * from teacher";
         switch (choice) {
             case "1.3.1":
@@ -76,7 +75,7 @@ public class SQL {
         return sql;
     }
 
-    public String addInfo(String choice) {
+    public String addInfoSQL(String choice) {
         String sql = "insert into ";
         switch (choice) {
             case "2.1":
@@ -90,6 +89,22 @@ public class SQL {
                 break;
         }
         return sql;
+    }
+    public String updateSQL(String choice){
+        String sql = "Update ";
+        switch (choice){
+            case "3.1":
+                sql=sql+"student set name = ? ,age =? ,sex =? where id = ?";
+                break;
+            case "3.2":
+                sql=sql +"subject set name = ?,describe = ? where id = ?";
+                break;
+            case "3.3":
+                sql=sql+"teacher set name = ? where id = ?";
+                break;
+            case "3.4":
+                sql = "score set subject_id = ?,score=? where id = ?";
+        }return sql;
     }
 
 }
