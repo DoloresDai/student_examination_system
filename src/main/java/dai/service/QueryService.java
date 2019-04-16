@@ -64,7 +64,7 @@ class QueryService {
         Statement statement = connect.getStatement(connection);
         ResultSet resultSet = connect.executeSQL(statement, sql);
         try {
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 GetModel getModel = new GetModel();
                 Score score = getModel.getScore(resultSet);
                 Student student = getModel.getStudent(resultSet);
@@ -85,9 +85,9 @@ class QueryService {
                     System.out.println(student.toString() + subject.getSubjectInfo());
                 } else if (!subject.isEmpty() && !teacher.isEmpty() && !student.isEmpty()) {
                     System.out.println(student.getStudentInfo() + teacher.getTeacherInfo() + subject.getSubjectInfo());
-                } else {
-                    System.out.println("————信息查询为空————");
                 }
+            } else {
+                System.out.println("————信息查询为空————");
             }
         } catch (SQLException e) {
             System.out.println("————生成信息失败————\n" + e.toString());
