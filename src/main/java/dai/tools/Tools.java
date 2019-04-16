@@ -15,9 +15,14 @@ public class Tools {
     public static ArrayList<String> getInfo(String s) {
         String[] strings = s.split("，");
         ArrayList<String> info = new ArrayList<>();
-        for (String string : strings) {
-            info.add(string.split("：")[1]);
+        try {
+            for (String string : strings) {
+                info.add(string.split("：")[1]);
+            }
+        }catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("信息输入错误！");
         }
+
         return info;
     }
 
@@ -33,17 +38,20 @@ public class Tools {
         return new SetModel().setSubject(info);
     }
 
-    public static Map<Student,Subject> getStudentScoreModel(String info) {
+    public static Map<Student, Subject> getStudentScoreModel(String info) {
         return new SetModel().setStudentScore(info);
     }
-    public static Student getScoreStudent(Map<Student,Subject> map){
+
+    public static Student getScoreStudent(Map<Student, Subject> map) {
         Iterator<Student> iterator = map.keySet().iterator();
         Student student = new Student();
         while (iterator.hasNext()) {
             student = iterator.next();
-        }return student;
+        }
+        return student;
     }
-    public static void printMenu(){
+
+    public static void printMenu() {
         System.out.println("您好，超级管理员，请选择你需要进行的操作：\n" +
                 "1. 查询\n" +
                 "\t1.1 查询学生信息以及成绩\n" +
@@ -56,8 +64,8 @@ public class Tools {
                 "\t    1.2.2 指定课程名称的信息\n" +
                 "\t    1.2.3 指定老师的所有课程信息\n" +
                 "\t1.3 查询老师信息\n" +
-                "\t    1. 所有老师信息\n" +
-                "\t    2. 指定老师信息\n" +
+                "\t    1.3.1 所有老师信息\n" +
+                "\t    1.3.2 指定老师信息\n" +
                 "2. 新增\n" +
                 "\t2.1 新增学生信息\n" +
                 "\t2.2 新增课程信息\n" +
@@ -70,7 +78,7 @@ public class Tools {
                 "    3.4 修改指定学生的成绩\n" +
                 "4. 删除\n" +
                 "\t4.1 删除指定学生\n" +
-                "\t4.3 删除指定课程\n" +
+                "\t4.2 删除指定课程\n" +
                 "\t4.3 删除指定老师");
     }
 }
