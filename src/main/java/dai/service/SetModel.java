@@ -1,5 +1,6 @@
 package main.java.dai.service;
 
+import main.java.dai.model.Score;
 import main.java.dai.model.Student;
 import main.java.dai.model.Subject;
 import main.java.dai.model.Teacher;
@@ -30,6 +31,7 @@ public class SetModel {
         try {
             teacher.setId(Integer.parseInt(studentInfo.get(0)));
             teacher.setName(studentInfo.get(1));
+            teacher.setSubject_id(Integer.parseInt(studentInfo.get(2)));
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("老师信息输入错误！");
         }
@@ -53,10 +55,13 @@ public class SetModel {
         Map<Student, Subject> studentScore = new HashMap<>();
         Student student = new Student();
         Subject subject = new Subject();
+        Score score = new Score();
         ArrayList<String> studentInfo = Tools.getInfo(s);
         try {
             subject.setId(Integer.parseInt(studentInfo.get(0)));
             student.setId(Integer.parseInt(studentInfo.get(1)));
+            score.setScore(Float.parseFloat(studentInfo.get(2)));
+            student.setScore(score);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("学生成绩信息输入错误！");
         }
