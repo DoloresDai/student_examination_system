@@ -44,7 +44,7 @@ class QueryService {
                 queryAll(choice);
                 break;
             case "1.3.1":
-                System.out.println("查询所有课程信息为：");
+                System.out.println("查询所有老师信息为：");
                 queryAll(choice);
                 break;
             case "1.3.2":
