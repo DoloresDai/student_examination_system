@@ -110,14 +110,18 @@ public class Service {
         Connection connection = connect.getConnect();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, student.getId());
-            preparedStatement.setString(2, student.getName());
-            preparedStatement.setInt(3, student.getAge());
-            preparedStatement.setString(4, student.getSex());
-            preparedStatement.execute();
-            System.out.println("添加学生信息[" + student.getStudentInfo() + "]成功！");
-
+            if (!student.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, student.getId());
+                preparedStatement.setString(2, student.getName());
+                preparedStatement.setInt(3, student.getAge());
+                preparedStatement.setString(4, student.getSex());
+                preparedStatement.execute();
+                System.out.println("添加学生信息[" + student.getStudentInfo() + "]成功！");
+            } else {
+                System.out.println("老师信息输入不全！请重新输入：");
+                new Service().addService("2.1");
+            }
         } catch (SQLException e) {
             System.out.println("增添学生信息失败！\n" + e.toString());
             new Service().addService("2.1");
@@ -127,6 +131,7 @@ public class Service {
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
@@ -137,12 +142,17 @@ public class Service {
         Connection connection = connect.getConnect();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, subject.getId());
-            preparedStatement.setString(2, subject.getName());
-            preparedStatement.setString(3, subject.getDescribe());
-            preparedStatement.execute();
-            System.out.println("添加课程信息[" + subject.getName() + "]成功！");
+            if (!subject.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, subject.getId());
+                preparedStatement.setString(2, subject.getName());
+                preparedStatement.setString(3, subject.getDescribe());
+                preparedStatement.execute();
+                System.out.println("添加课程信息[" + subject.getName() + "]成功！");
+            } else {
+                System.out.println("课程信息输入不全！请重新输入：");
+                new Service().addService("2.2");
+            }
         } catch (SQLException e) {
             System.out.println("增加课程信息失败！\n" + e.toString());
             new Service().addService("2.2");
@@ -152,6 +162,7 @@ public class Service {
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
@@ -162,12 +173,17 @@ public class Service {
         Connection connection = connect.getConnect();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, teacher.getId());
-            preparedStatement.setString(2, teacher.getName());
-            preparedStatement.setInt(3, teacher.getSubject_id());
-            preparedStatement.execute();
-            System.out.println("添加老师信息[" + teacher.getName() + "]成功！");
+            if (!teacher.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, teacher.getId());
+                preparedStatement.setString(2, teacher.getName());
+                preparedStatement.setInt(3, teacher.getSubject_id());
+                preparedStatement.execute();
+                System.out.println("添加老师信息[" + teacher.getName() + "]成功！");
+            } else {
+                System.out.println("老师信息输入不全！请重新输入：");
+                new Service().addService("2.3");
+            }
         } catch (SQLException e) {
             System.out.println("增添老师信息失败！\n" + e.toString());
             new Service().addService("2.3");
@@ -177,6 +193,7 @@ public class Service {
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
@@ -190,11 +207,16 @@ public class Service {
         Connection connection = connect.getConnect();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, subject.getId());
-            preparedStatement.setInt(2, student.getId());
-            preparedStatement.setFloat(3, score.getScore());
-            System.out.println("添加学生成绩信息[学号：" + student.getId() + score.toString() + "]成功！");
+            if (!subject.isEmpty() && !student.isEmpty() && !score.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, subject.getId());
+                preparedStatement.setInt(2, student.getId());
+                preparedStatement.setFloat(3, score.getScore());
+                System.out.println("添加学生成绩信息[学号：" + student.getId() + score.toString() + "]成功！");
+            } else {
+                System.out.println("学生成绩信息输入不全！请重新输入：");
+                new Service().addService("2.4");
+            }
         } catch (SQLException e) {
             System.out.println("增添学生成绩信息失败！\n" + e.toString());
             new Service().addService("2.4");
@@ -204,6 +226,7 @@ public class Service {
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
@@ -236,13 +259,18 @@ public class Service {
         PreparedStatement preparedStatement = null;
         Student student = Tools.getStudentModel(info);
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(4, student.getId());
-            preparedStatement.setString(1, student.getName());
-            preparedStatement.setInt(2, student.getAge());
-            preparedStatement.setString(3, student.getSex());
-            preparedStatement.execute();
-            System.out.println("修改学生信息[" + student.getStudentInfo() + "]成功！");
+            if (!student.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(4, student.getId());
+                preparedStatement.setString(1, student.getName());
+                preparedStatement.setInt(2, student.getAge());
+                preparedStatement.setString(3, student.getSex());
+                preparedStatement.execute();
+                System.out.println("修改学生信息[" + student.getStudentInfo() + "]成功！");
+            } else {
+                System.out.println("学生信息输入不全！请重新输入：");
+                new Service().updateService("3.1");
+            }
         } catch (SQLException e) {
             System.out.println("修改学生信息失败！\n" + e.toString());
             new Service().updateService("3.1");
@@ -252,6 +280,7 @@ public class Service {
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
@@ -262,12 +291,17 @@ public class Service {
         PreparedStatement preparedStatement = null;
         Subject subject = Tools.getSubjectModel(info);
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(3, subject.getId());
-            preparedStatement.setString(1, subject.getName());
-            preparedStatement.setString(2, subject.getDescribe());
-            preparedStatement.execute();
-            System.out.println("修改课程信息[" + subject.getName() + "]成功！");
+            if (!subject.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(3, subject.getId());
+                preparedStatement.setString(1, subject.getName());
+                preparedStatement.setString(2, subject.getDescribe());
+                preparedStatement.execute();
+                System.out.println("修改课程信息[" + subject.getName() + "]成功！");
+            } else {
+                System.out.println("课程信息输入不全！请重新输入：");
+                new Service().updateService("3.2");
+            }
         } catch (SQLException e) {
             System.out.println("修改课程信息失败！\n" + e.toString());
             new Service().updateService("3.2");
@@ -277,6 +311,7 @@ public class Service {
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
@@ -287,13 +322,17 @@ public class Service {
         PreparedStatement preparedStatement = null;
         Teacher teacher = Tools.getTeacherModel(info);
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(3, teacher.getId());
-            preparedStatement.setString(1, teacher.getName());
-            preparedStatement.setInt(2, teacher.getSubject_id());
-            preparedStatement.execute();
-            System.out.println("修改老师信息[" + teacher.getName() + "]成功！");
-
+            if (!teacher.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(3, teacher.getId());
+                preparedStatement.setString(1, teacher.getName());
+                preparedStatement.setInt(2, teacher.getSubject_id());
+                preparedStatement.execute();
+                System.out.println("修改老师信息[" + teacher.getName() + "]成功！");
+            } else {
+                System.out.println("老师信息输入不全！请重新输入：");
+                new Service().updateService("3.3");
+            }
         } catch (SQLException e) {
             System.out.println("修改老师信息失败！\n" + e.toString());
             new Service().updateService("3.3");
@@ -303,6 +342,7 @@ public class Service {
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
@@ -316,13 +356,17 @@ public class Service {
         Subject subject = studentSubjectMap.get(student);
         Score score = student.getScore();
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, subject.getId());
-            preparedStatement.setInt(3, student.getId());
-            preparedStatement.setFloat(2, score.getScore());
-            preparedStatement.execute();
-            System.out.println("修改学生成绩信息[学号：" + student.getId() + score.toString() + "]成功！");
-
+            if (!subject.isEmpty() && !subject.isEmpty() && !score.isEmpty()) {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, subject.getId());
+                preparedStatement.setInt(3, student.getId());
+                preparedStatement.setFloat(2, score.getScore());
+                preparedStatement.execute();
+                System.out.println("修改学生成绩信息[学号：" + student.getId() + score.toString() + "]成功！");
+            } else {
+                System.out.println("学生成绩信息输入不全！请重新输入：");
+                new Service().updateService("3.4");
+            }
         } catch (SQLException e) {
             System.out.println("修改学生成绩信息失败！\n" + e.toString());
             new Service().updateService("3.4");
@@ -332,6 +376,7 @@ public class Service {
                 preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
+            } catch (NullPointerException e) {
             }
         }
     }
