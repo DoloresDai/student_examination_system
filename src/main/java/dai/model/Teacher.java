@@ -2,7 +2,7 @@ package main.java.dai.model;
 
 public class Teacher {
     private int id;
-    private String teacher;
+    private String name;
 
     public int getId() {
         return id;
@@ -12,20 +12,20 @@ public class Teacher {
         this.id = id;
     }
 
-    public String getTeacher() {
-        return teacher;
+    public String getName() {
+        return name;
     }
 
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isEmpty() {
-        return this.teacher == null;
+        return this.name == null;
     }
 
     public String getTeacherInfo() {
-        return ", 老师： " + this.teacher;
+        return ", 老师： " + this.name;
     }
 
     @Override
