@@ -19,8 +19,8 @@ public class GetModel {
             student.setSex(resultSet.getString("student.sex"));
             student.setScore(getScore(resultSet));
             return student;
+
         } catch (SQLException e) {
-            System.out.println("获取Student失败！");
         }
         return student;
     }
@@ -32,7 +32,6 @@ public class GetModel {
             teacher.setName(resultSet.getString("teacher.name"));
             return teacher;
         } catch (SQLException e) {
-            System.out.println("获取Teacher失败！");
         }
         return teacher;
     }
@@ -42,10 +41,9 @@ public class GetModel {
         try {
             subject.setId(resultSet.getInt("subject.id"));
             subject.setName(resultSet.getString("subject.name"));
-            subject.setDescribe(resultSet.getString("subject.describe"));
+            subject.setDescribe(resultSet.getString("subject.content"));
             return subject;
         } catch (SQLException e) {
-            System.out.println("获取Subject失败！");
         }
         return subject;
     }
@@ -56,7 +54,6 @@ public class GetModel {
             score.setScore(resultSet.getFloat("score.score"));
             return score;
         } catch (SQLException e) {
-            System.out.println("获取Score失败！");
         }
         return score;
     }
