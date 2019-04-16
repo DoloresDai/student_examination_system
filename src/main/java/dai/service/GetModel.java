@@ -29,7 +29,7 @@ public class GetModel {
         Teacher teacher = new Teacher();
         try {
             teacher.setId(resultSet.getInt("teacher.id"));
-            teacher.setTeacher(resultSet.getString("teacher.name"));
+            teacher.setName(resultSet.getString("teacher.name"));
             return teacher;
         } catch (SQLException e) {
             System.out.println("获取Teacher失败！");

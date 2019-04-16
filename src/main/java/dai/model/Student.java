@@ -52,7 +52,7 @@ public class Student {
     }
 
     public String getStudentInfo() {
-        return "学号： " + this.id + "，姓名： " + this.name;
+        return "学号：" + this.id + "，姓名：" + this.name;
     }
 
     @Override
