@@ -2,7 +2,7 @@ package main.java.dai.dao;
 
 import main.java.dai.tools.Tools;
 
-public class SQL {
+public class ServiceSQL {
     public String getSQL(String choice) {
         String[] selectChoice = choice.split("\\.");
         switch (selectChoice[0]) {
