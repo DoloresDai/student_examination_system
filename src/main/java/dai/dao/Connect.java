@@ -8,7 +8,7 @@ public class Connect {
     private static final String PASSWORD = "abc960101";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
 
-    public Connection getConnect(){
+    public Connection getConnect() {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
@@ -16,13 +16,14 @@ public class Connect {
         }
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(URL,NAME,PASSWORD);
+            conn = DriverManager.getConnection(URL, NAME, PASSWORD);
         } catch (SQLException e) {
             System.out.println("数据库连接失败！");
         }
         return conn;
     }
-    public Statement getStatement(Connection conn){
+
+    public Statement getStatement(Connection conn) {
         Statement statement = null;
         try {
             statement = conn.createStatement();
@@ -31,7 +32,8 @@ public class Connect {
         }
         return statement;
     }
-    public PreparedStatement getPreparedStatement(Connection conn,String sql){
+
+    public PreparedStatement getPreparedStatement(Connection conn, String sql) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = conn.prepareStatement(sql);
@@ -40,7 +42,8 @@ public class Connect {
         }
         return preparedStatement;
     }
-    public ResultSet executeSQL(Statement statement,String sql){
+
+    public ResultSet executeSQL(Statement statement, String sql) {
         ResultSet rs = null;
         try {
             rs = statement.executeQuery(sql);
@@ -49,20 +52,40 @@ public class Connect {
         }
         return rs;
     }
-    public void closeConnect(ResultSet resultSet,Statement statement,Connection connection){
-        if (resultSet!=null){
+
+    public void closeConnect(ResultSet resultSet, Statement statement, Connection connection) {
+        if (resultSet != null) {
             try {
                 resultSet.close();
             } catch (SQLException e) {
                 System.out.println("关闭ResultSet异常!");
             }
-        }if (statement!=null){
+        }
+        if (statement != null) {
             try {
                 statement.close();
             } catch (SQLException e) {
                 System.out.println("关闭Statement异常！");
             }
-        }if (connection!=null){
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("关闭Connection异常！");
+            }
+        }
+    }
+
+    public void closePreparedConnect(PreparedStatement preparedStatement, Connection connection) {
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭PreparedStatement异常！");
+            }
+        }
+        if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException e) {
