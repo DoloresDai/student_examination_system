@@ -43,7 +43,7 @@ class AddService {
         Student student = Tools.getStudentModel(info);
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
         try {
             if (!student.isEmpty()) {
                 preparedStatement = connection.prepareStatement(sql);
@@ -62,13 +62,7 @@ class AddService {
             System.out.println("增添学生信息失败！\n" + e.toString());
             new AddService("2.1");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 
@@ -76,10 +70,10 @@ class AddService {
         Subject subject = Tools.getSubjectModel(info);
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
+
         try {
             if (!subject.isEmpty()) {
-                preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, subject.getId());
                 preparedStatement.setString(2, subject.getName());
                 preparedStatement.setString(3, subject.getDescribe());
@@ -94,13 +88,7 @@ class AddService {
             System.out.println("增加课程信息失败！\n" + e.toString());
             new AddService("2.2");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 
@@ -108,10 +96,9 @@ class AddService {
         Teacher teacher = Tools.getTeacherModel(info);
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
         try {
             if (!teacher.isEmpty()) {
-                preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, teacher.getId());
                 preparedStatement.setString(2, teacher.getName());
                 preparedStatement.setInt(3, teacher.getSubject_id());
@@ -126,13 +113,7 @@ class AddService {
             System.out.println("增添老师信息失败！\n" + e.toString());
             new AddService("2.3");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 
@@ -146,7 +127,7 @@ class AddService {
         PreparedStatement preparedStatement = null;
         try {
             if (!subject.isEmpty() && !student.isEmpty() && !score.isEmpty()) {
-                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement = connect.getPreparedStatement(connection, sql);
                 preparedStatement.setInt(1, subject.getId());
                 preparedStatement.setInt(2, student.getId());
                 preparedStatement.setFloat(3, score.getScore());
@@ -160,13 +141,7 @@ class AddService {
             System.out.println("增添学生成绩信息失败！\n" + e.toString());
             new AddService("2.4");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 
