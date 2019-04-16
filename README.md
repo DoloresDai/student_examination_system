@@ -58,10 +58,8 @@
 
 **登录截图**
 
-![](C:\Users\admin\Pictures\思窝\stu_man_sys_login.png)
-
-![](C:\Users\admin\Pictures\思窝\stu_man_sys_islogin.png)
-
+![](http://ww1.sinaimg.cn/large/005Qcrzely1g24qv362uqj31hc0sq42c.jpg)
+![](http://ww1.sinaimg.cn/large/005Qcrzely1g24qverl9aj31hc0sqn0v.jpg)
 ##### 目录
 
 ```
@@ -96,25 +94,18 @@
 ```
 
 ##### 查询所有学生成绩信息1.1.1
-
-![](C:\Users\admin\Pictures\思窝\stu_man_sys_1.1.1.png)
-
+![](http://ww1.sinaimg.cn/large/005Qcrzely1g24qw0tnydj31hc0sqn15.jpg)
 ##### 查询所有课程信息1.2.1
 
-![](C:\Users\admin\Pictures\思窝\stu_man_sys_1.2.1.png)
-
+![](http://ww1.sinaimg.cn/large/005Qcrzely1g24qwa08vtj31hc0sq42n.jpg)
 ##### 查询所有老师信息1.3.1
 
-![](C:\Users\admin\Pictures\思窝\stu_man_sys_1.3.1.png)
-
+![](http://ww1.sinaimg.cn/large/005Qcrzely1g24qwi7wioj31hc0sq429.jpg)
 ##### 当选项出错时
 
-![](C:\Users\admin\Pictures\思窝\stu_man_sys_wrong_choice.png)
-
-![](C:\Users\admin\Pictures\思窝\stu_man_sys_1.1.2.png)
-
-![](C:\Users\admin\Pictures\思窝\stu_man_sys_2.1.png)
-
+![](http://ww1.sinaimg.cn/large/005Qcrzely1g24qxdropnj31hc0sq0w7.jpg)
+![](http://ww1.sinaimg.cn/large/005Qcrzely1g24qxmn4vgj31hc0sqadq.jpg)
+![](http://ww1.sinaimg.cn/large/005Qcrzely1g24qy2oh6hj31hc0sq42n.jpg)
 ##### 退出系统
 
-![](C:\Users\admin\Pictures\思窝\stu_man_sys_logout.png)
+![](http://ww1.sinaimg.cn/large/005Qcrzely1g24qyeqhqdj31hc0sq77a.jpg)
