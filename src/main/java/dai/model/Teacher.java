@@ -30,7 +30,7 @@ public class Teacher {
     }
 
     public boolean isEmpty() {
-        return this.name == null;
+        return this.id == 0;
     }
 
     public String getTeacherInfo() {
