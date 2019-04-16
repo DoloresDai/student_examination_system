@@ -30,97 +30,102 @@ public class SQL {
         String sql = "SELECT * FROM score";
         switch (choice) {
             case "1.1.1":
-                sql = "Select * from student";
+                sql = "SELECT * FROM student";
                 break;
             case "1.1.2":
-                sql = sql + " left join subject on score.subject_id = subject.id " + " LEFT OUTER JOIN student on score.student_id = student.id WHERE student.NAME='" + Tools.getScanner() + "'";
+                sql = sql + " LEFT JOIN SUBJECT ON score.subject_id = subject.id " +
+                        " LEFT OUTER JOIN student ON score.student_id = student.id WHERE student.name ='"
+                        + Tools.getScanner() + "'";
                 break;
             case "1.1.3":
-                sql = sql + " LEFT OUTER JOIN teacher on score.subject_id= teacher.subject_id " + " LEFT OUTER JOIN student on score.student_id = student.id " +
-                        "WHERE teacher.NAME ='" + Tools.getScanner() + "'";
+                sql = sql + " LEFT OUTER JOIN teacher ON score.subject_id= teacher.subject_id "
+                        + " LEFT OUTER JOIN student ON score.student_id = student.id " +
+                        "WHERE teacher.name ='" + Tools.getScanner() + "'";
                 break;
             case "1.1.4":
-                sql = sql + " left join student on score.student_id = student.id " + " left outer join subject on subject.id = score.subject_id where subject.name = '" + Tools.getScanner() + "'";
+                sql = sql + " LEFT JOIN student ON score.student_id = student.id "
+                        + " LEFT OUTER JOIN SUBJECT ON subject.id = score.subject_id WHERE subject.name = '"
+                        + Tools.getScanner() + "'";
                 break;
         }
         return sql;
     }
 
     public String querySubjectSQL(String choice) {
-        String sql = "select * from subject left join teacher on teacher.subject_id = subject.id";
+        String sql = "SELECT * FROM SUBJECT LEFT JOIN teacher ON teacher.subject_id = subject.id";
         switch (choice) {
             case "1.2.1":
                 return sql;
             case "1.2.2":
-                sql = sql + " where subject.name = '" + Tools.getScanner() + "'";
+                sql = sql + " WHERE subject.name = '" + Tools.getScanner() + "'";
                 break;
             case "1.2.3":
-                sql = sql + " where teacher.name = '" + Tools.getScanner() + "'";
+                sql = sql + " WHERE teacher.name = '" + Tools.getScanner() + "'";
                 break;
         }
         return sql;
     }
 
     public String queryTeacherSQL(String choice) {
-        String sql = "select * from teacher";
+        String sql = "SELECT * FROM teacher";
         switch (choice) {
             case "1.3.1":
                 return sql;
             case "1.3.2":
-                sql = sql + " where teacher.name = '" + Tools.getScanner() + "'";
+                sql = sql + " WHERE teacher.name = '" + Tools.getScanner() + "'";
                 break;
         }
         return sql;
     }
 
     public String addInfoSQL(String choice) {
-        String sql = "insert into ";
+        String sql = "INSERT INTO ";
         switch (choice) {
             case "2.1":
-                sql = sql + " student(id,name,age,sex) values(?,?,?,?)";
+                sql = sql + " student(id,name,age,sex) VALUES(?,?,?,?)";
                 break;
             case "2.2":
-                sql = sql + " subject(id,name,content) values(?,?,?)";
+                sql = sql + " subject(id,name,content) VALUES(?,?,?)";
                 break;
             case "2.3":
-                sql = sql + " teacher(id,name,subject_id) values(?,?,?)";
+                sql = sql + " teacher(id,name,subject_id) VALUES(?,?,?)";
                 break;
             case "2.4":
-                sql = sql + " score(subject_id,student_id,score) values(?,?,?)";
+                sql = sql + " score(subject_id,student_id,score) VALUES(?,?,?)";
                 break;
         }
         return sql;
     }
 
     public String updateSQL(String choice) {
-        String sql = "Update ";
+        String sql = "UPDATE ";
         switch (choice) {
             case "3.1":
-                sql = sql + "student set name = ? ,age =? ,sex =? where id = ?";
+                sql = sql + "student SET NAME = ? ,age =? ,sex =? WHERE id = ?";
                 break;
             case "3.2":
-                sql = sql + "subject set name = ?,content = ? where id = ?";
+                sql = sql + "SUBJECT SET NAME = ?,content = ? WHERE id = ?";
                 break;
             case "3.3":
-                sql = sql + "teacher set name = ? ,subject_id = ? where id = ?";
+                sql = sql + "teacher SET NAME = ? ,subject_id = ? WHERE id = ?";
                 break;
             case "3.4":
-                sql = sql + "score set subject_id = ?,score=? where student_id = ?";
+                sql = sql + "score SET subject_id = ?,score=? WHERE student_id = ?";
         }
         return sql;
     }
 
     public String deleteSQL(String choice) {
-        String sql = "Delete from ";
+        String sql = "DELETE FROM ";
         switch (choice) {
             case "4.1":
-                sql = sql + "student where id = ?";
+                sql = sql + "student WHERE id = ?";
                 break;
             case "4.2":
-                sql = sql + "subject where id = ?";
+                sql = sql + "subject WHERE id = ?";
                 break;
             case "4.3":
-                sql = sql + "teacher where id = ?";
+                sql = sql + "teacher WHERE id = ?";
                 break;
         }
         return sql;
