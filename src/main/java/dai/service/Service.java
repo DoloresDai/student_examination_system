@@ -86,19 +86,19 @@ public class Service {
         String sql = new SQL().addInfoSQL(choice);
         switch (choice) {
             case "2.1":
-                System.out.println("请输入要增加的学生信息(例如：学号：20190101，姓名：池昌旭，年龄：18，性别：男)：");
+                System.out.println("请输入要增加的学生信息（例如：学号：20190101，姓名：池昌旭，年龄：18，性别：男）：");
                 addStudent(Tools.getScanner(), sql);
                 break;
             case "2.2":
-                System.out.println("请输入要增加的课程信息（例如：编号：2001，科目：语文，考试描述：考试内容较简单");
+                System.out.println("请输入要增加的课程信息（例如：编号：2001，科目：语文，考试描述：考试内容较简单）：");
                 addSubject(Tools.getScanner(), sql);
                 break;
             case "2.3":
-                System.out.println("请输入要增加的老师信息（例如：教师编号：1002，姓名：井柏然，科目：2001");
+                System.out.println("请输入要增加的老师信息（例如：教师编号：1002，姓名：井柏然，科目：2001）：");
                 addTeacher(Tools.getScanner(), sql);
                 break;
             case "2.4":
-                System.out.println("请输入要增加的学生成绩信息（例如：科目编号：2001，学生编号：20190101，成绩：88");
+                System.out.println("请输入要增加的学生成绩信息（例如：科目编号：2001，学生编号：20190101，成绩：88）：");
                 addStudentScore(Tools.getScanner(), sql);
                 break;
         }
@@ -212,19 +212,19 @@ public class Service {
         String sql = new SQL().updateSQL(choice);
         switch (choice) {
             case "3.1":
-                System.out.println("请输入要修改的学生信息(例如：学号：20190101，姓名：池昌旭，年龄：18，性别：男)：");
+                System.out.println("请输入要修改的学生信息（例如：学号：20190101，姓名：池昌旭，年龄：18，性别：男）：");
                 updateStudent(Tools.getScanner(), sql);
                 break;
             case "3.2":
-                System.out.println("请输入要修改的课程信息（例如：编号：2001，科目：语文，考试描述：考试内容较简单");
+                System.out.println("请输入要修改的课程信息（例如：编号：2001，科目：语文，考试描述：考试内容较简单）：");
                 updateSubject(Tools.getScanner(), sql);
                 break;
             case "3.3":
-                System.out.println("请输入要修改的老师信息（例如：教师编号：1002，姓名：井柏然，科目：2002");
+                System.out.println("请输入要修改的老师信息（例如：教师编号：1002，姓名：井柏然，科目：2002）：");
                 updateTeacher(Tools.getScanner(), sql);
                 break;
             case "3.4":
-                System.out.println("请输入要修改的学生成绩信息（例如：科目编号：2001，学生编号：20190101，成绩：88");
+                System.out.println("请输入要修改的学生成绩信息（例如：科目编号：2001，学生编号：20190101，成绩：88）：");
                 updateStudentScore(Tools.getScanner(), sql);
                 break;
         }
@@ -326,6 +326,94 @@ public class Service {
         } catch (SQLException e) {
             System.out.println("修改学生成绩信息失败！\n" + e.toString());
             new Service().updateService("3.4");
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
+        }
+    }
+
+    public void deleteService(String choice) {
+        String sql = new SQL().deleteSQL(choice);
+        switch (choice) {
+            case "4.1":
+                System.out.println("请输入要删除的学生信息（例如：学号：20190101）：");
+                deleteStudent(Tools.getScanner(), sql);
+                break;
+            case "4.2":
+                System.out.println("请输入要删除的课程信息（例如：编号：2001）：");
+                deleteSubject(Tools.getScanner(), sql);
+                break;
+            case "4.3":
+                System.out.println("请输入要删除的老师信息（例如：教师编号：1002）：");
+                deleteTeacher(Tools.getScanner(), sql);
+                break;
+        }
+    }
+
+    public void deleteStudent(String info, String sql) {
+        Connect connect = new Connect();
+        Connection connection = connect.getConnect();
+        PreparedStatement preparedStatement = null;
+        Student student = Tools.getStudentModel(info);
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, student.getId());
+            preparedStatement.execute();
+            System.out.println("删除学生信息[" + student.getStudentInfo() + "]成功！");
+        } catch (SQLException e) {
+            System.out.println("删除学生信息失败！\n" + e.toString());
+            new Service().updateService("4.1");
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
+        }
+    }
+
+    public void deleteSubject(String info, String sql) {
+        Connect connect = new Connect();
+        Connection connection = connect.getConnect();
+        PreparedStatement preparedStatement = null;
+        Subject subject = Tools.getSubjectModel(info);
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, subject.getId());
+            preparedStatement.execute();
+            System.out.println("删除课程信息[" + subject.getName() + "]成功！");
+        } catch (SQLException e) {
+            System.out.println("删除课程信息失败！\n" + e.toString());
+            new Service().updateService("4.2");
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
+        }
+    }
+
+    public void deleteTeacher(String info, String sql) {
+        Connect connect = new Connect();
+        Connection connection = connect.getConnect();
+        PreparedStatement preparedStatement = null;
+        Teacher teacher = Tools.getTeacherModel(info);
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, teacher.getId());
+            preparedStatement.execute();
+            System.out.println("删除老师信息[" + teacher.getName() + "]成功！");
+
+        } catch (SQLException e) {
+            System.out.println("删除老师信息失败！\n" + e.toString());
+            new Service().updateService("4.3");
         } finally {
             try {
                 connection.close();
