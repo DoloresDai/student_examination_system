@@ -36,11 +36,10 @@ class DeleteService {
     private void deleteStudent(String info, String sql) {
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
         Student student = Tools.getStudentModel(info);
         try {
             if (!student.isEmpty()) {
-                preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, student.getId());
                 preparedStatement.execute();
                 System.out.println("删除学生信息[学号：" + student.getId() + "]成功！");
@@ -53,24 +52,17 @@ class DeleteService {
             System.out.println("删除学生信息失败！\n" + e.toString());
             new DeleteService("4.1");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 
     private void deleteSubject(String info, String sql) {
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
-        PreparedStatement preparedStatement = null;
         Subject subject = Tools.getSubjectModel(info);
+        PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
         try {
             if (!subject.isEmpty()) {
-                preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, subject.getId());
                 preparedStatement.execute();
                 System.out.println("删除课程信息[" + subject.getId() + "]成功！");
@@ -83,24 +75,17 @@ class DeleteService {
             System.out.println("删除课程信息失败！\n" + e.toString());
             new DeleteService("4.2");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 
     private void deleteTeacher(String info, String sql) {
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
         Teacher teacher = Tools.getTeacherModel(info);
         try {
             if (!teacher.isEmpty()) {
-                preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, teacher.getId());
                 preparedStatement.execute();
                 System.out.println("删除老师信息[" + teacher.getId() + "]成功！");
@@ -113,13 +98,7 @@ class DeleteService {
             System.out.println("删除老师信息失败！\n" + e.toString());
             new DeleteService("4.3");
         } finally {
-            try {
-                connection.close();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.out.println("关闭连接失败！");
-            } catch (NullPointerException e) {
-            }
+            connect.closePreparedConnect(preparedStatement, connection);
         }
     }
 }
