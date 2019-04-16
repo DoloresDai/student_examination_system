@@ -74,7 +74,7 @@ class UpdateService {
             if (!subject.isEmpty()) {
                 preparedStatement.setInt(3, subject.getId());
                 preparedStatement.setString(1, subject.getName());
-                preparedStatement.setString(2, subject.getDescribe());
+                preparedStatement.setString(2, subject.getContent());
                 preparedStatement.execute();
                 System.out.println("修改课程信息[" + subject.getName() + "]成功！");
             } else {

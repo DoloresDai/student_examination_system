@@ -75,7 +75,7 @@ class AddService {
             if (!subject.isEmpty()) {
                 preparedStatement.setInt(1, subject.getId());
                 preparedStatement.setString(2, subject.getName());
-                preparedStatement.setString(3, subject.getDescribe());
+                preparedStatement.setString(3, subject.getContent());
                 preparedStatement.execute();
                 System.out.println("添加课程信息[" + subject.getName() + "]成功！");
             } else {

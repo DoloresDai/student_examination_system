@@ -3,7 +3,7 @@ package main.java.dai.model;
 public class Subject {
     private int id;
     private String name;
-    private String describe;
+    private String content;
 
     public int getId() {
         return id;
@@ -21,12 +21,12 @@ public class Subject {
         this.name = name;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getContent() {
+        return content;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public boolean isEmpty() {
@@ -39,6 +39,6 @@ public class Subject {
 
     @Override
     public String toString() {
-        return "\t 编号： " + this.id + getSubjectInfo() + "，考试描述： " + this.describe;
+        return "\t 编号： " + this.id + getSubjectInfo() + "，考试描述： " + this.content;
     }
 }

@@ -41,7 +41,7 @@ public class GetModel {
         try {
             subject.setId(resultSet.getInt("subject.id"));
             subject.setName(resultSet.getString("subject.name"));
-            subject.setDescribe(resultSet.getString("subject.content"));
+            subject.setContent(resultSet.getString("subject.content"));
             return subject;
         } catch (SQLException e) {
         }

@@ -46,7 +46,7 @@ public class SetModel {
         try {
             subject.setId(Integer.parseInt(studentInfo.get(0)));
             subject.setName(studentInfo.get(1));
-            subject.setDescribe(studentInfo.get(2));
+            subject.setContent(studentInfo.get(2));
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("科目信息输入错误！");
         }catch (IndexOutOfBoundsException e){
