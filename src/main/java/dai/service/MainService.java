@@ -30,19 +30,19 @@ public class MainService {
                 if (input[0].equals(user) && input[1].equals(password)) {
                     isLogin();
                 } else {
-                    System.out.println("不能进入系统————\n" +
+                    System.out.println("————不能进入系统————\n" +
                             "\t账号或密码错误！\n" +
                             "\t请重新输入：");
                     getLogin();
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("账号密码信息输入不全————\n" +
+            System.out.println("————账号密码信息输入不全————\n" +
                     "\t请重新输入:");
             getLogin();
         } catch (SQLException e) {
-            System.out.println("进入SQL系统失败————\n" +
-                    "\t请再次尝试：");
+            System.out.println("————进入SQL系统失败————\n" +
+                    "\t请再次尝试：\n" + e.toString());
             getLogin();
         } finally {
             connect.closeConnect(resultSet, statement, connection);
@@ -74,11 +74,11 @@ public class MainService {
                 isLogin();
                 break;
             case "5":
-                System.out.println("超级管理员已退出系统————\n" +
-                        "\t欢迎下次使用！");
+                System.out.println("————超级管理员已退出系统————\n" +
+                        "\t  欢迎下次使用！");
                 break;
             default:
-                System.out.println("选项输入错误————\n" +
+                System.out.println("————选项输入错误————\n" +
                         "\t请重新输入：\n");
                 isLogin();
         }

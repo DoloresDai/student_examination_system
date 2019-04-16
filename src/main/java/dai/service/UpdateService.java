@@ -34,7 +34,7 @@ class UpdateService {
                 updateStudentScore(Tools.getScanner(), sql);
                 break;
             default:
-                System.out.println("选项输入错误————\n" +
+                System.out.println("————选项输入错误————\n" +
                         "\t请重新输入：\n");
         }
     }
@@ -53,12 +53,12 @@ class UpdateService {
                 preparedStatement.execute();
                 System.out.println("修改学生信息[" + student.getStudentInfo() + "]成功！");
             } else {
-                System.out.println("学生信息输入不全————\n" +
+                System.out.println("————学生信息输入不全————\n" +
                         "\t 请重新输入：");
                 new UpdateService("3.1");
             }
         } catch (SQLException e) {
-            System.out.println("修改学生信息失败！\n" + e.toString());
+            System.out.println("————修改学生信息失败————\n" + e.toString());
             new UpdateService("3.1");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);
@@ -78,12 +78,12 @@ class UpdateService {
                 preparedStatement.execute();
                 System.out.println("修改课程信息[" + subject.getName() + "]成功！");
             } else {
-                System.out.println("课程信息输入不全————\n" +
+                System.out.println("————课程信息输入不全————\n" +
                         "\t 请重新输入：");
                 new UpdateService("3.2");
             }
         } catch (SQLException e) {
-            System.out.println("修改课程信息失败！\n" + e.toString());
+            System.out.println("————修改课程信息失败————\n" + e.toString());
             new UpdateService("3.2");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);
@@ -103,12 +103,12 @@ class UpdateService {
                 preparedStatement.execute();
                 System.out.println("修改老师信息[" + teacher.getName() + "]成功！");
             } else {
-                System.out.println("老师信息输入不全————\n" +
+                System.out.println("————老师信息输入不全————\n" +
                         "\t 请重新输入：");
                 new UpdateService("3.3");
             }
         } catch (SQLException e) {
-            System.out.println("修改老师信息失败！\n" + e.toString());
+            System.out.println("————修改老师信息失败————\n" + e.toString());
             new UpdateService("3.3");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);
@@ -131,12 +131,12 @@ class UpdateService {
                 preparedStatement.execute();
                 System.out.println("修改学生成绩信息[学号：" + student.getId() + score.toString() + "]成功！");
             } else {
-                System.out.println("学生成绩信息输入不全————\n" +
+                System.out.println("————学生成绩信息输入不全————\n" +
                         "\t 请重新输入：");
                 new UpdateService("3.4");
             }
         } catch (SQLException e) {
-            System.out.println("修改学生成绩信息失败！\n" + e.toString());
+            System.out.println("————修改学生成绩信息失败————\n" + e.toString());
             new UpdateService("3.4");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);

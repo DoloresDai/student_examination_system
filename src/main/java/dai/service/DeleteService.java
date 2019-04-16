@@ -28,7 +28,7 @@ class DeleteService {
                 deleteTeacher(Tools.getScanner(), sql);
                 break;
             default:
-                System.out.println("选项输入错误————\n" +
+                System.out.println("————选项输入错误————\n" +
                         "\t请重新输入：\n");
         }
     }
@@ -44,12 +44,12 @@ class DeleteService {
                 preparedStatement.execute();
                 System.out.println("删除学生信息[学号：" + student.getId() + "]成功！");
             } else {
-                System.out.println("不匹配任何学生信息————\n" +
+                System.out.println("————不匹配任何学生信息————\n" +
                         "\t请重新输入：");
                 new DeleteService("4.1");
             }
         } catch (SQLException e) {
-            System.out.println("删除学生信息失败！\n" + e.toString());
+            System.out.println("————删除学生信息失败————\n" + e.toString());
             new DeleteService("4.1");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);
@@ -67,12 +67,12 @@ class DeleteService {
                 preparedStatement.execute();
                 System.out.println("删除课程信息[" + subject.getId() + "]成功！");
             } else {
-                System.out.println("不匹配任何课程信息————\n" +
+                System.out.println("————不匹配任何课程信息————\n" +
                         "\t请重新输入：");
                 new DeleteService("4.2");
             }
         } catch (SQLException e) {
-            System.out.println("删除课程信息失败！\n" + e.toString());
+            System.out.println("————删除课程信息失败————\n" + e.toString());
             new DeleteService("4.2");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);
@@ -90,12 +90,12 @@ class DeleteService {
                 preparedStatement.execute();
                 System.out.println("删除老师信息[" + teacher.getId() + "]成功！");
             } else {
-                System.out.println("不匹配任何老师信息————\n" +
+                System.out.println("————不匹配任何老师信息————\n" +
                         "\t请重新输入：");
                 new DeleteService("4.3");
             }
         } catch (SQLException e) {
-            System.out.println("删除老师信息失败！\n" + e.toString());
+            System.out.println("————删除老师信息失败————\n" + e.toString());
             new DeleteService("4.3");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);

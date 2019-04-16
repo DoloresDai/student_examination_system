@@ -52,7 +52,7 @@ class QueryService {
                 queryAll(choice);
                 break;
             default:
-                System.out.println("选项输入错误————\n" +
+                System.out.println("————选项输入错误————\n" +
                         "\t请重新输入：\n");
         }
     }
@@ -86,11 +86,11 @@ class QueryService {
                 } else if (!subject.isEmpty() && !teacher.isEmpty() && !student.isEmpty()) {
                     System.out.println(student.getStudentInfo() + teacher.getTeacherInfo() + subject.getSubjectInfo());
                 } else {
-                    System.out.println("信息查询为空！");
+                    System.out.println("————信息查询为空————");
                 }
             }
         } catch (SQLException e) {
-            System.out.println("生成信息失败！");
+            System.out.println("————生成信息失败————\n" + e.toString());
         } finally {
             connect.closeConnect(resultSet, statement, connection);
         }

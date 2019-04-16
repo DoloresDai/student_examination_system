@@ -34,7 +34,7 @@ class AddService {
                 addStudentScore(Tools.getScanner(), sql);
                 break;
             default:
-                System.out.println("选项输入错误————\n" +
+                System.out.println("————选项输入错误————\n" +
                         "\t请重新输入：\n");
         }
     }
@@ -54,12 +54,12 @@ class AddService {
                 preparedStatement.execute();
                 System.out.println("添加学生信息[" + student.getStudentInfo() + "]成功！");
             } else {
-                System.out.println("老师信息输入不全————\n" +
+                System.out.println("————老师信息输入不全————\n" +
                         "\t 请重新输入：");
                 new AddService("2.1");
             }
         } catch (SQLException e) {
-            System.out.println("增添学生信息失败！\n" + e.toString());
+            System.out.println("————增添学生信息失败————\n" + e.toString());
             new AddService("2.1");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);
@@ -79,12 +79,12 @@ class AddService {
                 preparedStatement.execute();
                 System.out.println("添加课程信息[" + subject.getName() + "]成功！");
             } else {
-                System.out.println("课程信息输入不全————\n" +
+                System.out.println("————课程信息输入不全————\n" +
                         "\t 请重新输入：");
                 new AddService("2.2");
             }
         } catch (SQLException e) {
-            System.out.println("增加课程信息失败！\n" + e.toString());
+            System.out.println("————增加课程信息失败————\n" + e.toString());
             new AddService("2.2");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);
@@ -104,12 +104,12 @@ class AddService {
                 preparedStatement.execute();
                 System.out.println("添加老师信息[" + teacher.getName() + "]成功！");
             } else {
-                System.out.println("老师信息输入不全————\n" +
+                System.out.println("————老师信息输入不全————\n" +
                         "\t 请重新输入：");
                 new AddService("2.3");
             }
         } catch (SQLException e) {
-            System.out.println("增添老师信息失败！\n" + e.toString());
+            System.out.println("————增加老师信息失败————\n" + e.toString());
             new AddService("2.3");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);
@@ -132,12 +132,12 @@ class AddService {
                 preparedStatement.setFloat(3, score.getScore());
                 System.out.println("添加学生成绩信息[学号：" + student.getId() + score.toString() + "]成功！");
             } else {
-                System.out.println("学生成绩信息输入不全————\n" +
+                System.out.println("————学生成绩信息输入不全————\n" +
                         "\t 请重新输入：");
                 new AddService("2.4");
             }
         } catch (SQLException e) {
-            System.out.println("增添学生成绩信息失败！\n" + e.toString());
+            System.out.println("————增添学生成绩信息失败————\n" + e.toString());
             new AddService("2.4");
         } finally {
             connect.closePreparedConnect(preparedStatement, connection);
