@@ -1,6 +1,5 @@
 package main.java.dai.service;
 
-import main.java.dai.Main;
 import main.java.dai.dao.Connect;
 import main.java.dai.dao.Login;
 import main.java.dai.dao.SQL;
@@ -10,9 +9,7 @@ import main.java.dai.model.Subject;
 import main.java.dai.model.Teacher;
 import main.java.dai.tools.Tools;
 
-import javax.tools.Tool;
 import java.sql.*;
-import java.util.Iterator;
 import java.util.Map;
 
 public class Service {
@@ -32,7 +29,7 @@ public class Service {
                 String password = resultSet.getString("password");
                 if (input[0].equals(user) && input[1].equals(password)) {
                     Tools.printMenu();
-                    addService(Tools.getScanner());
+                    updateService(Tools.getScanner());
                 } else {
                     System.out.println("不能进入系统————\n" +
                             "\t账号或密码错误！");
@@ -89,7 +86,7 @@ public class Service {
         String sql = new SQL().addInfoSQL(choice);
         switch (choice) {
             case "2.1":
-                System.out.println("请输入要增加的学生信息(例如：学号：20190101，姓名：池昌旭,年龄：18,性别：男)：");
+                System.out.println("请输入要增加的学生信息(例如：学号：20190101，姓名：池昌旭，年龄：18，性别：男)：");
                 addStudent(Tools.getScanner(), sql);
                 break;
             case "2.2":
@@ -97,7 +94,7 @@ public class Service {
                 addSubject(Tools.getScanner(), sql);
                 break;
             case "2.3":
-                System.out.println("请输入要增加的老师信息（例如：教师编号：1001，姓名：井柏然，科目：2001");
+                System.out.println("请输入要增加的老师信息（例如：教师编号：1002，姓名：井柏然，科目：2001");
                 addTeacher(Tools.getScanner(), sql);
                 break;
             case "2.4":
@@ -122,7 +119,7 @@ public class Service {
             System.out.println("添加学生信息[" + student.getStudentInfo() + "]成功！");
 
         } catch (SQLException e) {
-            System.out.println("增添学生信息失败！");
+            System.out.println("增添学生信息失败！\n" + e.toString());
             new Service().addService("2.1");
         } finally {
             try {
@@ -144,11 +141,10 @@ public class Service {
             preparedStatement.setInt(1, subject.getId());
             preparedStatement.setString(2, subject.getName());
             preparedStatement.setString(3, subject.getDescribe());
-            if (preparedStatement.execute()) {
-                System.out.println("添加课程信息[" + subject.getName() + "]成功！");
-            }
+            preparedStatement.execute();
+            System.out.println("添加课程信息[" + subject.getName() + "]成功！");
         } catch (SQLException e) {
-            System.out.println("增添课程信息失败！");
+            System.out.println("增加课程信息失败！\n" + e.toString());
             new Service().addService("2.2");
         } finally {
             try {
@@ -169,11 +165,11 @@ public class Service {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, teacher.getId());
             preparedStatement.setString(2, teacher.getName());
-            if (preparedStatement.execute()) {
-                System.out.println("添加老师信息[" + teacher.getName() + "]成功！");
-            }
+            preparedStatement.setInt(3, teacher.getSubject_id());
+            preparedStatement.execute();
+            System.out.println("添加老师信息[" + teacher.getName() + "]成功！");
         } catch (SQLException e) {
-            System.out.println("增添老师信息失败！");
+            System.out.println("增添老师信息失败！\n" + e.toString());
             new Service().addService("2.3");
         } finally {
             try {
@@ -189,6 +185,7 @@ public class Service {
         Map<Student, Subject> studentSubjectMap = Tools.getStudentScoreModel(info);
         Student student = Tools.getScoreStudent(studentSubjectMap);
         Subject subject = studentSubjectMap.get(student);
+        Score score = student.getScore();
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
         PreparedStatement preparedStatement = null;
@@ -196,12 +193,10 @@ public class Service {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, subject.getId());
             preparedStatement.setInt(2, student.getId());
-            preparedStatement.setFloat(3, student.getScore().getScore());
-            if (preparedStatement.execute()) {
-                System.out.println("添加学生成绩信息[学号：" + student.getId() + " ，成绩： " + student.getScore().toString() + "]成功！");
-            }
+            preparedStatement.setFloat(3, score.getScore());
+            System.out.println("添加学生成绩信息[学号：" + student.getId() + score.toString() + "]成功！");
         } catch (SQLException e) {
-            System.out.println("增添学生成绩信息失败！");
+            System.out.println("增添学生成绩信息失败！\n" + e.toString());
             new Service().addService("2.4");
         } finally {
             try {
@@ -214,10 +209,10 @@ public class Service {
     }
 
     public void updateService(String choice) {
-        String sql = new SQL().addInfoSQL(choice);
+        String sql = new SQL().updateSQL(choice);
         switch (choice) {
             case "3.1":
-                System.out.println("请输入要修改的学生信息(例如：学号：20190101，姓名：池昌旭,年龄：18,性别：男)：");
+                System.out.println("请输入要修改的学生信息(例如：学号：20190101，姓名：池昌旭，年龄：18，性别：男)：");
                 updateStudent(Tools.getScanner(), sql);
                 break;
             case "3.2":
@@ -225,7 +220,7 @@ public class Service {
                 updateSubject(Tools.getScanner(), sql);
                 break;
             case "3.3":
-                System.out.println("请输入要修改的老师信息（例如：教师编号：1001，姓名：井柏然，科目：2001");
+                System.out.println("请输入要修改的老师信息（例如：教师编号：1002，姓名：井柏然，科目：2002");
                 updateTeacher(Tools.getScanner(), sql);
                 break;
             case "3.4":
@@ -249,7 +244,7 @@ public class Service {
             preparedStatement.execute();
             System.out.println("修改学生信息[" + student.getStudentInfo() + "]成功！");
         } catch (SQLException e) {
-            System.out.println("修改学生信息失败！");
+            System.out.println("修改学生信息失败！\n" + e.toString());
             new Service().updateService("3.1");
         } finally {
             try {
@@ -271,11 +266,10 @@ public class Service {
             preparedStatement.setInt(3, subject.getId());
             preparedStatement.setString(1, subject.getName());
             preparedStatement.setString(2, subject.getDescribe());
-            if (preparedStatement.execute()) {
-                System.out.println("修改课程信息[" + subject.getName() + "]成功！");
-            }
+            preparedStatement.execute();
+            System.out.println("修改课程信息[" + subject.getName() + "]成功！");
         } catch (SQLException e) {
-            System.out.println("修改课程信息失败！");
+            System.out.println("修改课程信息失败！\n" + e.toString());
             new Service().updateService("3.2");
         } finally {
             try {
@@ -294,13 +288,14 @@ public class Service {
         Teacher teacher = Tools.getTeacherModel(info);
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(2, teacher.getId());
+            preparedStatement.setInt(3, teacher.getId());
             preparedStatement.setString(1, teacher.getName());
-            if (preparedStatement.execute()) {
-                System.out.println("修改老师信息[" + teacher.getName() + "]成功！");
-            }
+            preparedStatement.setInt(2, teacher.getSubject_id());
+            preparedStatement.execute();
+            System.out.println("修改老师信息[" + teacher.getName() + "]成功！");
+
         } catch (SQLException e) {
-            System.out.println("修改老师信息失败！");
+            System.out.println("修改老师信息失败！\n" + e.toString());
             new Service().updateService("3.3");
         } finally {
             try {
@@ -319,23 +314,22 @@ public class Service {
         Map<Student, Subject> studentSubjectMap = Tools.getStudentScoreModel(info);
         Student student = Tools.getScoreStudent(studentSubjectMap);
         Subject subject = studentSubjectMap.get(student);
+        Score score = student.getScore();
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, subject.getId());
             preparedStatement.setInt(3, student.getId());
-            preparedStatement.setFloat(2, student.getScore().getScore());
-            if (preparedStatement.execute()) {
-                System.out.println("修改学生成绩信息[学号：" + student.getId() + " ，成绩： " + student.getScore().toString() + "]成功！");
-            }
+            preparedStatement.setFloat(2, score.getScore());
+            preparedStatement.execute();
+            System.out.println("修改学生成绩信息[学号：" + student.getId() + score.toString() + "]成功！");
+
         } catch (SQLException e) {
-            System.out.println("修改学生成绩信息失败！");
+            System.out.println("修改学生成绩信息失败！\n" + e.toString());
             new Service().updateService("3.4");
         } finally {
             try {
                 connection.close();
-                if (preparedStatement.execute()) {
-                    preparedStatement.close();
-                }
+                preparedStatement.close();
             } catch (SQLException e) {
                 System.out.println("关闭连接失败！");
             }
