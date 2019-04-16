@@ -52,7 +52,7 @@ public class Tools {
     }
 
     public static void printMenu() {
-        System.out.println("您好，超级管理员，请选择你需要进行的操作：\n" +
+        System.out.println("\n您好，超级管理员，请选择你需要进行的操作：\n" +
                 "1. 查询\n" +
                 "\t1.1 查询学生信息以及成绩\n" +
                 "\t\t1.1.1 所有学生信息\n" +
@@ -79,6 +79,7 @@ public class Tools {
                 "4. 删除\n" +
                 "\t4.1 删除指定学生\n" +
                 "\t4.2 删除指定课程\n" +
-                "\t4.3 删除指定老师");
+                "\t4.3 删除指定老师\n" +
+                "5. 退出系统");
     }
 }
