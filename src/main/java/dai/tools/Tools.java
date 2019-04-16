@@ -5,7 +5,10 @@ import main.java.dai.model.Subject;
 import main.java.dai.model.Teacher;
 import main.java.dai.service.SetModel;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Tools {
     public static String getScanner() {
@@ -19,7 +22,7 @@ public class Tools {
             for (String string : strings) {
                 info.add(string.split("：")[1]);
             }
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("信息输入错误！");
         }
 

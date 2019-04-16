@@ -71,7 +71,6 @@ class AddService {
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
         PreparedStatement preparedStatement = connect.getPreparedStatement(connection, sql);
-
         try {
             if (!subject.isEmpty()) {
                 preparedStatement.setInt(1, subject.getId());
