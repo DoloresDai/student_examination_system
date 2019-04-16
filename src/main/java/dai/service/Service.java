@@ -1,5 +1,6 @@
 package main.java.dai.service;
 
+import main.java.dai.Main;
 import main.java.dai.dao.Connect;
 import main.java.dai.dao.Login;
 import main.java.dai.dao.SQL;
@@ -9,6 +10,7 @@ import main.java.dai.model.Subject;
 import main.java.dai.model.Teacher;
 import main.java.dai.tools.Tools;
 
+import javax.tools.Tool;
 import java.sql.*;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,34 +31,7 @@ public class Service {
                 String user = resultSet.getString("user");
                 String password = resultSet.getString("password");
                 if (input[0].equals(user) && input[1].equals(password)) {
-                    System.out.println("您好，超级管理员，请选择你需要进行的操作：\n" +
-                            "1. 查询\n" +
-                            "\t1.1 查询学生信息以及成绩\n" +
-                            "\t\t1.1.1 所有学生信息\n" +
-                            "\t\t1.1.2 指定学生姓名的信息以及所有课程的成绩\n" +
-                            "\t\t1.1.3 指定老师的所有学生及其成绩\n" +
-                            "\t\t1.1.4 指定课程的所有学生及其成绩\n" +
-                            "\t1.2 查询课程信息\n" +
-                            "\t    1.2.1 所有课程信息\n" +
-                            "\t    1.2.2 指定课程名称的信息\n" +
-                            "\t    1.2.3 指定老师的所有课程信息\n" +
-                            "\t1.3 查询老师信息\n" +
-                            "\t    1. 所有老师信息\n" +
-                            "\t    2. 指定老师信息\n" +
-                            "2. 新增\n" +
-                            "\t2.1 新增学生信息\n" +
-                            "\t2.2 新增课程信息\n" +
-                            "\t2.3 新增老师信息\n" +
-                            "\t2.4 给指定学生新增成绩\n" +
-                            "3. 修改\n" +
-                            "    3.1 修改指定学号的学生\n" +
-                            "    3.2 修改指定课程的信息\n" +
-                            "    3.3 修改指定老师的信息\n" +
-                            "    3.4 修改指定学生的成绩\n" +
-                            "4. 删除\n" +
-                            "\t4.1 删除指定学生\n" +
-                            "\t4.3 删除指定课程\n" +
-                            "\t4.3 删除指定老师");
+                    Tools.printMenu();
                     addService(Tools.getScanner());
                 } else {
                     System.out.println("不能进入系统————\n" +
@@ -75,7 +50,7 @@ public class Service {
         SQL sqlString = new SQL();
         Connection connection = connect.getConnect();
         Statement statement = connect.getStatement(connection);
-        ResultSet resultSet = connect.executeSQL(statement, sqlString.query(Tools.getScanner()));
+        ResultSet resultSet = connect.executeSQL(statement, sqlString.querySQL(Tools.getScanner()));
 
         try {
             while (resultSet.next()) {
@@ -111,10 +86,10 @@ public class Service {
     }
 
     public void addService(String choice) {
-        String sql = new SQL().addInfo(choice);
+        String sql = new SQL().addInfoSQL(choice);
         switch (choice) {
             case "2.1":
-                System.out.println("请输入学生信息(例如：学号：20190101，姓名：池昌旭,年龄：18,性别：男)：");
+                System.out.println("请输入要增加的学生信息(例如：学号：20190101，姓名：池昌旭,年龄：18,性别：男)：");
                 addStudent(Tools.getScanner(), sql);
                 break;
             case "2.2":
@@ -133,8 +108,7 @@ public class Service {
     }
 
     public void addStudent(String info, String sql) {
-        SetModel setModel = new SetModel();
-        Student student = setModel.setStudent(info);
+        Student student = Tools.getStudentModel(info);
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
         PreparedStatement preparedStatement = null;
@@ -149,12 +123,19 @@ public class Service {
 
         } catch (SQLException e) {
             System.out.println("增添学生信息失败！");
+            new Service().addService("2.1");
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
         }
     }
 
     public void addSubject(String info, String sql) {
-        SetModel setModel = new SetModel();
-        Subject subject = setModel.setSubject(info);
+        Subject subject = Tools.getSubjectModel(info);
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
         PreparedStatement preparedStatement = null;
@@ -168,12 +149,19 @@ public class Service {
             }
         } catch (SQLException e) {
             System.out.println("增添课程信息失败！");
+            new Service().addService("2.2");
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
         }
     }
 
     public void addTeacher(String info, String sql) {
-        SetModel setModel = new SetModel();
-        Teacher teacher = setModel.setTeacher(info);
+        Teacher teacher = Tools.getTeacherModel(info);
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
         PreparedStatement preparedStatement = null;
@@ -186,18 +174,21 @@ public class Service {
             }
         } catch (SQLException e) {
             System.out.println("增添老师信息失败！");
+            new Service().addService("2.3");
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
         }
     }
 
     public void addStudentScore(String info, String sql) {
-        SetModel setModel = new SetModel();
-        Map<Student, Subject> studentScore = setModel.setStudentScore(info);
-        Iterator<Student> iterator = studentScore.keySet().iterator();
-        Student student = new Student();
-        while (iterator.hasNext()) {
-            student = iterator.next();
-        }
-        Subject subject = studentScore.get(student);
+        Map<Student, Subject> studentSubjectMap = Tools.getStudentScoreModel(info);
+        Student student = Tools.getScoreStudent(studentSubjectMap);
+        Subject subject = studentSubjectMap.get(student);
         Connect connect = new Connect();
         Connection connection = connect.getConnect();
         PreparedStatement preparedStatement = null;
@@ -210,7 +201,144 @@ public class Service {
                 System.out.println("添加学生成绩信息[学号：" + student.getId() + " ，成绩： " + student.getScore().toString() + "]成功！");
             }
         } catch (SQLException e) {
-            System.out.println("增添学生信息失败！");
+            System.out.println("增添学生成绩信息失败！");
+            new Service().addService("2.4");
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
+        }
+    }
+
+    public void updateService(String choice) {
+        String sql = new SQL().addInfoSQL(choice);
+        switch (choice) {
+            case "3.1":
+                System.out.println("请输入要修改的学生信息(例如：学号：20190101，姓名：池昌旭,年龄：18,性别：男)：");
+                updateStudent(Tools.getScanner(), sql);
+                break;
+            case "3.2":
+                System.out.println("请输入要修改的课程信息（例如：编号：2001，科目：语文，考试描述：考试内容较简单");
+                updateSubject(Tools.getScanner(), sql);
+                break;
+            case "3.3":
+                System.out.println("请输入要修改的老师信息（例如：教师编号：1001，姓名：井柏然，科目：2001");
+                updateTeacher(Tools.getScanner(), sql);
+                break;
+            case "3.4":
+                System.out.println("请输入要修改的学生成绩信息（例如：科目编号：2001，学生编号：20190101，成绩：88");
+                updateStudentScore(Tools.getScanner(), sql);
+                break;
+        }
+    }
+
+    public void updateStudent(String info, String sql) {
+        Connect connect = new Connect();
+        Connection connection = connect.getConnect();
+        PreparedStatement preparedStatement = null;
+        Student student = Tools.getStudentModel(info);
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(4, student.getId());
+            preparedStatement.setString(1, student.getName());
+            preparedStatement.setInt(2, student.getAge());
+            preparedStatement.setString(3, student.getSex());
+            preparedStatement.execute();
+            System.out.println("修改学生信息[" + student.getStudentInfo() + "]成功！");
+        } catch (SQLException e) {
+            System.out.println("修改学生信息失败！");
+            new Service().updateService("3.1");
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
+        }
+    }
+
+    public void updateSubject(String info, String sql) {
+        Connect connect = new Connect();
+        Connection connection = connect.getConnect();
+        PreparedStatement preparedStatement = null;
+        Subject subject = Tools.getSubjectModel(info);
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(3, subject.getId());
+            preparedStatement.setString(1, subject.getName());
+            preparedStatement.setString(2, subject.getDescribe());
+            if (preparedStatement.execute()) {
+                System.out.println("修改课程信息[" + subject.getName() + "]成功！");
+            }
+        } catch (SQLException e) {
+            System.out.println("修改课程信息失败！");
+            new Service().updateService("3.2");
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
+        }
+    }
+
+    public void updateTeacher(String info, String sql) {
+        Connect connect = new Connect();
+        Connection connection = connect.getConnect();
+        PreparedStatement preparedStatement = null;
+        Teacher teacher = Tools.getTeacherModel(info);
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(2, teacher.getId());
+            preparedStatement.setString(1, teacher.getName());
+            if (preparedStatement.execute()) {
+                System.out.println("修改老师信息[" + teacher.getName() + "]成功！");
+            }
+        } catch (SQLException e) {
+            System.out.println("修改老师信息失败！");
+            new Service().updateService("3.3");
+        } finally {
+            try {
+                connection.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
+        }
+    }
+
+    public void updateStudentScore(String info, String sql) {
+        Connect connect = new Connect();
+        Connection connection = connect.getConnect();
+        PreparedStatement preparedStatement = null;
+        Map<Student, Subject> studentSubjectMap = Tools.getStudentScoreModel(info);
+        Student student = Tools.getScoreStudent(studentSubjectMap);
+        Subject subject = studentSubjectMap.get(student);
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, subject.getId());
+            preparedStatement.setInt(3, student.getId());
+            preparedStatement.setFloat(2, student.getScore().getScore());
+            if (preparedStatement.execute()) {
+                System.out.println("修改学生成绩信息[学号：" + student.getId() + " ，成绩： " + student.getScore().toString() + "]成功！");
+            }
+        } catch (SQLException e) {
+            System.out.println("修改学生成绩信息失败！");
+            new Service().updateService("3.4");
+        } finally {
+            try {
+                connection.close();
+                if (preparedStatement.execute()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("关闭连接失败！");
+            }
         }
     }
 }
