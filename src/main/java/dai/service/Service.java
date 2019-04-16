@@ -31,8 +31,7 @@ public class Service {
                 String user = resultSet.getString("user");
                 String password = resultSet.getString("password");
                 if (input[0].equals(user) && input[1].equals(password)) {
-                    Tools.printMenu();
-                    choicefunction(Tools.getScanner());
+                    isLogin();
                 } else {
                     System.out.println("不能进入系统————\n" +
                             "\t账号或密码错误！\n" +
@@ -53,32 +52,92 @@ public class Service {
         }
     }
 
-    public void choicefunction(String choice) {
+    public void isLogin() {
+        Tools.printMenu();
+        choiceService(Tools.getScanner());
+    }
+
+    public void choiceService(String choice) {
         String one = choice.split("\\.")[0];
         switch (one) {
             case "1":
-                queryService();
+                queryService(choice);
+                isLogin();
                 break;
             case "2":
                 addService(choice);
+                isLogin();
                 break;
             case "3":
                 updateService(choice);
+                isLogin();
                 break;
             case "4":
                 deleteService(choice);
+                isLogin();
                 break;
+            case "5":
+                System.out.println("超级管理员已退出系统————\n" +
+                        "\t欢迎下次使用！");
+                break;
+            default:
+                System.out.println("选项输入错误————\n" +
+                        "\t请重新输入：\n");
+                isLogin();
         }
 
     }
 
-    public void queryService() {
+    public void queryService(String choice) {
+        switch (choice) {
+            case "1.1.1":
+                System.out.println("查询所有学生信息如下：");
+                queryAll(choice);
+                break;
+            case "1.1.2":
+                System.out.println("请输入要查询的学生姓名（例如：池昌旭）：");
+                queryAll(choice);
+                break;
+            case "1.1.3":
+                System.out.println("请输入要查询的老师（例如：井柏然）：");
+                queryAll(choice);
+                break;
+            case "1.1.4":
+                System.out.println("请输入要查询的课程（例如：语文）：");
+                queryAll(choice);
+                break;
+            case "1.2.1":
+                System.out.println("查询所有课程信息如下：");
+                queryAll(choice);
+                break;
+            case "1.2.2":
+                System.out.println("请输入要查询的课程名称：（例如：语文）");
+                queryAll(choice);
+                break;
+            case "1.2.3":
+                System.out.println("请输入要查询的老师（例如：井柏然）：");
+                queryAll(choice);
+                break;
+            case "1.3.1":
+                System.out.println("查询所有课程信息为：");
+                queryAll(choice);
+                break;
+            case "1.3.2":
+                System.out.println("请输入要查询的老师（例如：井柏然）：");
+                queryAll(choice);
+                break;
+            default:
+                System.out.println("选项输入错误————\n" +
+                        "\t请重新输入：\n");
+        }
+    }
+
+    public void queryAll(String choice) {
         Connect connect = new Connect();
-        SQL sqlString = new SQL();
+        String sql = new SQL().getSQL(choice);
         Connection connection = connect.getConnect();
         Statement statement = connect.getStatement(connection);
-        ResultSet resultSet = connect.executeSQL(statement, sqlString.querySQL(Tools.getScanner()));
-
+        ResultSet resultSet = connect.executeSQL(statement, sql);
         try {
             while (resultSet.next()) {
                 GetModel getModel = new GetModel();
@@ -113,7 +172,7 @@ public class Service {
     }
 
     public void addService(String choice) {
-        String sql = new SQL().addInfoSQL(choice);
+        String sql = new SQL().getSQL(choice);
         switch (choice) {
             case "2.1":
                 System.out.println("请输入要增加的学生信息（例如：学号：20190101，姓名：池昌旭，年龄：18，性别：男）：");
@@ -131,6 +190,9 @@ public class Service {
                 System.out.println("请输入要增加的学生成绩信息（例如：科目编号：2001，学生编号：20190101，成绩：88）：");
                 addStudentScore(Tools.getScanner(), sql);
                 break;
+            default:
+                System.out.println("选项输入错误————\n" +
+                        "\t请重新输入：\n");
         }
     }
 
@@ -266,7 +328,7 @@ public class Service {
     }
 
     public void updateService(String choice) {
-        String sql = new SQL().updateSQL(choice);
+        String sql = new SQL().getSQL(choice);
         switch (choice) {
             case "3.1":
                 System.out.println("请输入要修改的学生信息（例如：学号：20190101，姓名：池昌旭，年龄：18，性别：男）：");
@@ -284,6 +346,9 @@ public class Service {
                 System.out.println("请输入要修改的学生成绩信息（例如：科目编号：2001，学生编号：20190101，成绩：88）：");
                 updateStudentScore(Tools.getScanner(), sql);
                 break;
+            default:
+                System.out.println("选项输入错误————\n" +
+                        "\t请重新输入：\n");
         }
     }
 
@@ -420,7 +485,7 @@ public class Service {
     }
 
     public void deleteService(String choice) {
-        String sql = new SQL().deleteSQL(choice);
+        String sql = new SQL().getSQL(choice);
         switch (choice) {
             case "4.1":
                 System.out.println("请输入要删除的学生信息（例如：学号：20190101）：");
@@ -434,6 +499,9 @@ public class Service {
                 System.out.println("请输入要删除的老师信息（例如：教师编号：1002）：");
                 deleteTeacher(Tools.getScanner(), sql);
                 break;
+            default:
+                System.out.println("选项输入错误————\n" +
+                        "\t请重新输入：\n");
         }
     }
 
